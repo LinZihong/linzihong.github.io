@@ -60,11 +60,22 @@ h1 {
   letter-spacing: 0;
 }
 
+.home-title {
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+}
+
 h2 {
   margin-bottom: 12px;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.55rem;
   line-height: 1.2;
+  letter-spacing: 0;
+}
+
+h3 {
+  margin-bottom: 6px;
+  font-size: 1.08rem;
+  line-height: 1.3;
   letter-spacing: 0;
 }
 
@@ -145,17 +156,14 @@ nav a:hover {
   margin-bottom: 0;
 }
 
-.photo-placeholder {
-  display: grid;
+.profile-photo {
+  display: block;
   width: 100%;
   aspect-ratio: 4 / 5;
   margin-bottom: 22px;
-  place-items: center;
-  border: 1px dashed var(--line);
   border-radius: 8px;
-  color: var(--muted);
-  background: #f5f3ee;
-  font-weight: 700;
+  object-fit: cover;
+  object-position: center;
 }
 
 .button-row,
@@ -269,6 +277,50 @@ nav a:hover {
   color: var(--muted);
 }
 
+.travel-section {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 32px;
+  border-top: 1px solid var(--line);
+  padding: 34px 0;
+}
+
+.section-label h2 {
+  margin-bottom: 0;
+}
+
+.travel-list {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.travel-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  gap: 20px;
+  align-items: start;
+  border-left: 3px solid var(--accent);
+  padding: 2px 0 2px 18px;
+}
+
+.travel-item h3 a {
+  color: var(--text);
+}
+
+.travel-item p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.travel-item time {
+  color: var(--gold);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
 .site-footer {
   display: flex;
   justify-content: space-between;
@@ -297,6 +349,11 @@ nav a:hover {
   }
 
   .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .travel-section,
+  .travel-item {
     grid-template-columns: 1fr;
   }
 

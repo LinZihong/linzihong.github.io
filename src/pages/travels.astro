@@ -1,13 +1,170 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+type TravelEvent = {
+  title: string;
+  start: string;
+  end: string;
+  dateLabel: string;
+  location: string;
+  url: string;
+};
+
+const travelEvents: TravelEvent[] = [
+  {
+    title: "Chicago-Tokyo Algebraic Geometry Workshop",
+    start: "2026-06-02",
+    end: "2026-06-05",
+    dateLabel: "June 2-5, 2026",
+    location: "University of Illinois Chicago, Chicago, IL",
+    url: "https://sites.google.com/view/ctagw/"
+  },
+  {
+    title: "Montreal ISM Discovery School: Combinatorics of Moduli of Curves",
+    start: "2026-05-11",
+    end: "2026-05-15",
+    dateLabel: "May 11-15, 2026",
+    location: "LACIM, UQAM, Montreal, QC",
+    url: "https://sites.google.com/view/m0n-treal-summer-school/home"
+  },
+  {
+    title: "Western Algebraic Geometry Symposium: San Diego Spring 2026",
+    start: "2026-03-06",
+    end: "2026-03-08",
+    dateLabel: "March 6-8, 2026",
+    location: "UC San Diego, La Jolla, CA",
+    url: "https://sites.google.com/a/wagsymposium.org/current/san-diego-spring-2026"
+  },
+  {
+    title: "Western Algebraic Geometry Symposium: Oregon Fall 2025",
+    start: "2025-11-07",
+    end: "2025-11-09",
+    dateLabel: "November 7-9, 2025",
+    location: "University of Oregon, Eugene, OR",
+    url: "https://sites.google.com/a/wagsymposium.org/current/oregon-fall-2025"
+  },
+  {
+    title: "2025 Summer Research Institute in Algebraic Geometry",
+    start: "2025-07-14",
+    end: "2025-08-01",
+    dateLabel: "July 14-August 1, 2025",
+    location: "Colorado State University, Fort Collins, CO",
+    url: "https://sites.google.com/view/2025summerinstitute/home"
+  },
+  {
+    title: "Western Algebraic Geometry Symposium: UBC Spring 2025",
+    start: "2025-04-26",
+    end: "2025-04-27",
+    dateLabel: "April 26-27, 2025",
+    location: "University of British Columbia, Vancouver, BC",
+    url: "https://sites.google.com/a/wagsymposium.org/current/ubc-spring-2025"
+  }
+];
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const bySoonest = (a: TravelEvent, b: TravelEvent) =>
+  new Date(a.start).getTime() - new Date(b.start).getTime();
+
+const byMostRecent = (a: TravelEvent, b: TravelEvent) =>
+  new Date(b.end).getTime() - new Date(a.end).getTime();
+
+const upcomingEvents = travelEvents
+  .filter((event) => new Date(`${event.end}T23:59:59`).getTime() >= today.getTime())
+  .sort(bySoonest);
+
+const pastEvents = travelEvents
+  .filter((event) => new Date(`${event.end}T23:59:59`).getTime() < today.getTime())
+  .sort(byMostRecent);
 ---
 
 <BaseLayout title="Travels" description="Travels by Zihong Lin.">
   <section class="page-heading">
-    <p class="eyebrow">Travels</p>
     <h1>Travels</h1>
     <p class="prose">
-      Notes and photos from travels will live here later.
+      Conferences, schools, and mathematical trips.
     </p>
   </section>
+
+  <section class="travel-section">
+    <div class="section-label">
+      <h2>Upcoming</h2>
+    </div>
+    <div>
+      <ol class="travel-list">
+        {
+          upcomingEvents.map((event) => (
+            <li data-travel-item data-start={event.start} data-end={event.end}>
+              <article class="travel-item">
+                <div>
+                  <h3><a href={event.url}>{event.title}</a></h3>
+                  <p>{event.location}</p>
+                </div>
+                <time datetime={event.start}>{event.dateLabel}</time>
+              </article>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="muted empty-state" data-empty-state="upcoming" hidden={upcomingEvents.length > 0}>
+        No upcoming trips listed yet.
+      </p>
+    </div>
+  </section>
+
+  <section class="travel-section">
+    <div class="section-label">
+      <h2>Past</h2>
+    </div>
+    <ol class="travel-list">
+      {
+        pastEvents.map((event) => (
+          <li data-travel-item data-start={event.start} data-end={event.end}>
+            <article class="travel-item">
+              <div>
+                <h3><a href={event.url}>{event.title}</a></h3>
+                <p>{event.location}</p>
+              </div>
+              <time datetime={event.start}>{event.dateLabel}</time>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <script>
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const sections = Array.from(document.querySelectorAll<HTMLElement>(".travel-section"));
+    const upcomingList = sections[0]?.querySelector<HTMLOListElement>(".travel-list");
+    const pastList = sections[1]?.querySelector<HTMLOListElement>(".travel-list");
+    const upcomingEmptyState = document.querySelector<HTMLElement>('[data-empty-state="upcoming"]');
+    const items = Array.from(document.querySelectorAll<HTMLElement>("[data-travel-item]"));
+    const getStart = (item: HTMLElement) => item.dataset.start ?? "";
+    const getEnd = (item: HTMLElement) => item.dataset.end ?? "";
+
+    const bySoonest = (first: HTMLElement, second: HTMLElement) =>
+      new Date(getStart(first)).getTime() - new Date(getStart(second)).getTime();
+
+    const byMostRecent = (first: HTMLElement, second: HTMLElement) =>
+      new Date(getEnd(second)).getTime() - new Date(getEnd(first)).getTime();
+
+    const upcomingItems = items
+      .filter((item) => new Date(`${getEnd(item)}T23:59:59`).getTime() >= today.getTime())
+      .sort(bySoonest);
+
+    const pastItems = items
+      .filter((item) => new Date(`${getEnd(item)}T23:59:59`).getTime() < today.getTime())
+      .sort(byMostRecent);
+
+    upcomingItems.forEach((item) => upcomingList?.append(item));
+    pastItems.forEach((item) => pastList?.append(item));
+
+    if (upcomingEmptyState) {
+      upcomingEmptyState.hidden = upcomingItems.length > 0;
+    }
+  </script>
 </BaseLayout>
