@@ -1,0 +1,20 @@
+---
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/travels/", label: "Travels" },
+  { href: "/assets/cv/CV%20-%20LIN,%20Zihong.pdf", label: "CV" }
+];
+---
+
+<header class="site-header">
+  <a class="site-title" href="/">Zihong Lin</a>
+  <nav aria-label="Primary navigation">
+    {
+      links.map((link) => (
+        <a href={link.href} aria-current={Astro.url.pathname === link.href ? "page" : undefined}>
+          {link.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>

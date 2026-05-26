@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const emailAddress = "zhlin@uw.edu";
+const displayedEmail = "zhLASTNAME at uw.edu";
+const cvHref = "/assets/cv/CV%20-%20LIN,%20Zihong.pdf";
+---
+
+<BaseLayout title="Home" description="Academic website for Zihong Lin, mathematics PhD student.">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Mathematics PhD Student</p>
+      <h1>Zihong Lin</h1>
+      <p class="lede">
+        I am a second-year mathematics PhD student at the University of Washington.
+      </p>
+      <p class="lede">
+        I am interested in algebraic geometry and its interactions with matroid
+        theory and non-archimedean geometry. I am currently working on the
+        computations of some KSBA moduli spaces.
+      </p>
+      <div class="button-row">
+        <a class="button primary" href={cvHref}>CV</a>
+        <a class="button" href="/travels/">Travels</a>
+      </div>
+    </div>
+    <aside class="profile-card" aria-label="Profile summary">
+      <div class="photo-placeholder" aria-label="Profile photo placeholder">
+        Photo coming soon
+      </div>
+      <p><strong>University of Washington</strong><br />Department of Mathematics</p>
+      <p><strong>Email</strong><br /><a href={`mailto:${emailAddress}`}>{displayedEmail}</a></p>
+    </aside>
+  </section>
+</BaseLayout>
