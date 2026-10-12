@@ -5,8 +5,10 @@ An Astro static site for Zihong Lin, designed for GitHub Pages and a files-and-f
 ## Edit the Site
 
 - Edit the homepage in `src/pages/index.astro`.
+- Edit the writing page in `src/pages/writing.astro`.
 - Edit the travels page in `src/pages/travels.astro`.
 - Put your CV in `public/assets/cv/`.
+- Put writing PDFs in `public/assets/writing/` (not in the generated `dist/` directory).
 - Put images in `public/assets/images/`.
 
 ## Local Development

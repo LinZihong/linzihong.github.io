@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const writings = [
+  {
+    title: "Heights on Toric Varieties",
+    year: "2026",
+    context: "UW Writing Milestone",
+    description:
+      "An exposition of the arithmetic geometry of toric varieties, written for the University of Washington's writing milestone requirement. Following Burgos Gil, Philippon, and Sombra, it develops the connection between toric metrics, convex geometry, and height formulas, with projective space as a running example.",
+    href: "/assets/writing/toric-heights.pdf"
+  },
+  {
+    title: "The Geometry and Combinatorics of G-modules, and Where to Find Them",
+    year: "2024",
+    context: "Part III Essay · University of Cambridge",
+    description:
+      "An exposition of geometric and combinatorial descriptions of representations through Borel–Weil–Bott and string parametrisation of crystal bases. Following Kaveh, it explains how Bott–Samelson coordinates connect polynomial expressions for sections with string parameters.",
+    href: "/assets/writing/part-iii-essay.pdf"
+  }
+];
+---
+
+<BaseLayout title="Writing" description="Expository mathematical writing by Zihong Lin.">
+  <section class="page-heading">
+    <h1>Writing</h1>
+    <p class="prose">Expository mathematical writing.</p>
+  </section>
+
+  <ol class="writing-list">
+    {
+      writings.map((writing) => (
+        <li>
+          <article class="writing-item">
+            <time datetime={writing.year}>{writing.year}</time>
+            <div>
+              <h2><a href={writing.href}>{writing.title}</a></h2>
+              <p class="writing-context">{writing.context}</p>
+              <p class="prose">{writing.description}</p>
+              <a class="text-link" href={writing.href} aria-label={`Read ${writing.title} (PDF)`}>PDF</a>
+            </div>
+          </article>
+        </li>
+      ))
+    }
+  </ol>
+</BaseLayout>

@@ -277,6 +277,38 @@ nav a:hover {
   color: var(--muted);
 }
 
+.writing-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.writing-item {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 32px;
+  border-top: 1px solid var(--line);
+  padding: 32px 0;
+}
+
+.writing-item time {
+  color: var(--gold);
+  font-weight: 800;
+}
+
+.writing-item h2 a {
+  color: var(--text);
+}
+
+.writing-item .prose {
+  max-width: 720px;
+}
+
+.writing-context {
+  margin-bottom: 16px;
+  color: var(--muted);
+}
+
 .travel-section {
   display: grid;
   grid-template-columns: 180px minmax(0, 1fr);
@@ -353,8 +385,13 @@ nav a:hover {
   }
 
   .travel-section,
-  .travel-item {
+  .travel-item,
+  .writing-item {
     grid-template-columns: 1fr;
+  }
+
+  .writing-item {
+    gap: 10px;
   }
 
   .hero {
